@@ -78,28 +78,36 @@ const BookingModal = ({ onClose, onConfirm }) => {
               required
             />
           </div>
+         
           <div>
-            <label className="block mb-2">Date</label>
-            <input
-              type="date"
-              name="date"
-              value={appointmentDetails.date}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-          <div>
-            <label className="block mb-2">Time</label>
-            <input
-              type="time"
-              name="time"
-              value={appointmentDetails.time}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
+  <label className="block mb-2">Date</label>
+  <input
+    type="date"
+    name="date"
+    value={appointmentDetails.date}
+    onChange={handleChange}
+    className="w-full p-2 border rounded"
+    required
+    min={new Date().toISOString().split("T")[0]} // Restrict past dates
+  />
+</div>
+
+<div>
+  <label className="block mb-2">Time</label>
+  <input
+    type="time"
+    name="time"
+    value={appointmentDetails.time}
+    onChange={handleChange}
+    className="w-full p-2 border rounded"
+    required
+    min={appointmentDetails.date === new Date().toISOString().split("T")[0] 
+         ? new Date().toLocaleTimeString([], { hourCycle: "h23", hour: "2-digit", minute: "2-digit" }) 
+         : ""} // Restrict past time if today
+  />
+</div>
+
+          
           <div className="flex justify-end space-x-4">
             <button
               type="button"
